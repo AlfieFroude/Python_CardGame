@@ -5,7 +5,7 @@ import array
 import random
 
 #Start Up - set up variables
-
+"""
 while True:
     # Play the game
     play()
@@ -14,18 +14,35 @@ def play():
     while player_not_bust():
         deal()
 
-def deal():
-    player_hand = deck()
+#def deal():
+"""
 
 #Create a Card Deck
-class card_deck():
-    deck = {}
+def card_deck():
 
-    suit = ['hearts', 'spades', 'diamond', 'clubs']
+    suits = ['Hearts ♥', 'Spades ♠', 'Diamonds ♦', 'Clubs ♣']
+    royals = ["J", "Q", "K", "A"]
+    numbered_cards = []
+    deck = []
 
-    ranks = ['two', 'three', 'four', 'five', 'six', 'seven', 'eight',
-             'nine', 'ten', 'jack', 'queen', 'king', 'ace']
+    #card_values = {'A':11,'2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'J':11, 'Q':12, 'K':13}]
+    #Ace set high, changes to low if need be during gameplay
 
-    values = ['two':2, 'three':3, 'four':4, 'five':5, 'six':6, 'seven':7,
-             'eight':8,'nine':9, 'ten':10, 'jack':11,
-             'queen':12, 'king':13, 'ace':1,]
+    # loops a set amount appending a new interger each time starting from 2
+    for i in range(2,11):
+        numbered_cards.append(str(i))
+        # numbers 2-10 added to numbered_cards and converted to strings
+    
+    for o in range(4):
+        numbered_cards.append(royals[o])
+        # royal cards added to numbered_cards to complete basic card order
+
+    for p in range(4):
+        for r in range(13):
+            card = (numbered_cards[r] + " of " + suits[p])
+            deck.append(card)
+
+    random.shuffle(deck)
+
+if __name__ == "__main__":
+    card_deck()
