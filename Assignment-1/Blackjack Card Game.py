@@ -1,7 +1,9 @@
 # Blackjack Card Game
 #Alfie Froude 05/11/20
 import random
-import sys
+from os import sys
+
+deck_amount = 53
 
 def start():
     print("\n~~~Welcome to Blackjack!~~~\n")
@@ -16,25 +18,40 @@ def start():
         start()
 
 def play():
-    print("***Insert Gameplay Here***")
     global players_hand
     players_hand = []
-    print("You have been dealt 2 cards:")
+    global hand_value
+    hand_value = 0
+    print("You have been dealt 2 cards:\n")
     deal_hand()
+    print(hand_value)
+    input("\nWould you like to DRAW (d) or FOLD (f):\n\n\nINPUT:")
+    
 
 def deal_hand():
+    i = 0
     initial_deal_amount = 2
-    for i in range(initial_deal_amount):
-        card_dealt = one_shuffled_deck(1)
+    while(i != initial_deal_amount):
+        card_dealt = one_shuffled_deck()
         print(card_dealt)
         players_hand.append(card_dealt)
         #the peramiter inputted is the number of cards dealt initially in blackjack
+        i = i + 1
+
 
 #def deal():
 
 #def fold():
 
-def one_shuffled_deck(x):
+def bust():
+    while (hand_value <= 21):
+        endgame = False
+        if (hand_value > 21):
+            endgame = True
+        
+
+
+def one_shuffled_deck():
 
     suits = ['Hearts ♥', 'Spades ♠', 'Diamonds ♦', 'Clubs ♣']
     royals = ["J", "Q", "K", "A"]
@@ -62,22 +79,47 @@ def one_shuffled_deck(x):
 
     random.shuffle(deck)
     # shuffles deck
-
-    h = random.randint(0, 53)
+    global deck_amount
+    card_limit = 0
+    deck_amount = card_limit
+    h = random.randint(0, card_limit)
+    deck_amount-=1
     card_picked = deck.pop(h)
+    card_value = card_picked[0]
+    if (card_value == "J" or card_value == "Q" or card_value == "K"):
+        card_value = 10
+    elif (card_value == "A"):
+        card_value == 11
+    else:
+        card_value = int(card_value)
+    global hand_value
+    hand_value = hand_value + card_value
     return card_picked
 
         #when function is called a random card to drawn from the deck
 
 
-    
 def rules():
     print("Aim:\n Get your hand's total as close to 21 as possible.\n If you exceed 21 you are bust.\n If you get 21 you have blackjack.\n  - In this case, you can only be beat if the dealer gets blackjack aswell. (This results in a DRAW).\n If you get anything below blackjack you just need to get higher than the dealer to WIN.\n")
     print("How To Play: ")
     print("1) You will be dealt 2 cards\n2) You have 2 options, FOLD or DRAW\n  FOLD: Stop your play\n  DRAW: Draw another card\n3) Get your hand value to 21 or higher than the dealers hand\n4) Don't get BUST! ")
-    
     input("\nPress Any Key To Continue...")
     start()
+
+def win():
+    print("You beat the dealer!\n\n***YOU WIN***")
+    input("\n\n Press Any Key To Exit...")
+    sys.exit()
+
+def draw():
+    print("You and the dealer both had the same value!\n\n***YOU DRAW***")
+    input("\n\n Press Any Key To Exit...")
+    sys.exit()
+
+def lose_bust():
+    print("You got BUST!\n\n***YOU LOSE***")
+    input("\n\n Press Any Key To Exit...")
+    sys.exit()
 
 def end():
     sys.exit()
