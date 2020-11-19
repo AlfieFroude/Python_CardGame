@@ -28,7 +28,7 @@ def play():
     hand_value = 0
     print("You have been dealt 2 cards:\n")
     deal_hand()
-    #print(hand_value)
+    print(hand_value)
     print("\nYour current hand is:\n")
     for i in players_hand:
         print(i, end=" ")
@@ -64,7 +64,7 @@ def deal():
     card_dealt = one_shuffled_deck()
     print(card_dealt)
     players_hand.append(card_dealt)
-    #print(hand_value)
+    print(hand_value)
     print("\nYour current hand is:\n")
     for i in players_hand:
         print(i, end=" ")
@@ -118,10 +118,13 @@ def one_shuffled_deck():
     deck_amount-=1
     card_picked = deck.pop(h)
     card_value = card_picked[0]
+    card_value_if10 = card_picked[1]
     if (card_value == "J" or card_value == "Q" or card_value == "K"):
         card_value = 10
     elif (card_value == "A"):
-        card_value == 11
+        card_value = 11
+    elif (card_value_if10 == "0"):
+        card_value = 10
     else:
         card_value = int(card_value)
     if (turn == True):
