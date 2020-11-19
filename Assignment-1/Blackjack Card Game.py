@@ -24,8 +24,22 @@ def play():
     hand_value = 0
     print("You have been dealt 2 cards:\n")
     deal_hand()
-    print(hand_value)
-    input("\nWould you like to DRAW (d) or FOLD (f):\n\n\nINPUT:")
+    #print(hand_value)
+    print("\nYour current hand is:\n")
+    for i in players_hand:
+        print(i, end=" ")
+    gameplay()
+
+def gameplay():
+    while hand_value <= 21:
+        nextmove = input("\n\nWould you like to DRAW (d) or FOLD (f):\n\n\nINPUT:")
+        if (nextmove == "d"):
+            deal()
+        elif (nextmove == "f"):
+            fold()
+            break
+    else:
+        bust()
     
 
 def deal_hand():
@@ -39,15 +53,28 @@ def deal_hand():
         i = i + 1
 
 
-#def deal():
+def deal():
+    print("You have been dealt a card:\n")
+    card_dealt = one_shuffled_deck()
+    print(card_dealt)
+    players_hand.append(card_dealt)
+    #print(hand_value)
+    print("\nYour current hand is:\n")
+    for i in players_hand:
+        print(i, end=" ")
+    gameplay()
 
-#def fold():
+def fold():
+    print("\nYou have folded...")
+    print("\nYour current hand is:\n")
+    for i in players_hand:
+        print(i, end=" ")
+    print("\n\nThe total of your hand is: " + str(hand_value))
+    print("\n\nThe Dealer got: " + str(dealers_hand_total))
 
 def bust():
-    while (hand_value <= 21):
-        endgame = False
-        if (hand_value > 21):
-            endgame = True
+    if (hand_value > 21):
+        lose_bust()
         
 
 
@@ -98,6 +125,8 @@ def one_shuffled_deck():
 
         #when function is called a random card to drawn from the deck
 
+def the_dealer():
+    
 
 def rules():
     print("Aim:\n Get your hand's total as close to 21 as possible.\n If you exceed 21 you are bust.\n If you get 21 you have blackjack.\n  - In this case, you can only be beat if the dealer gets blackjack aswell. (This results in a DRAW).\n If you get anything below blackjack you just need to get higher than the dealer to WIN.\n")
@@ -107,19 +136,19 @@ def rules():
     start()
 
 def win():
-    print("You beat the dealer!\n\n***YOU WIN***")
+    print("\n\nYou beat the dealer!\n\n***YOU WIN***")
     input("\n\n Press Any Key To Exit...")
-    sys.exit()
+    end()
 
 def draw():
-    print("You and the dealer both had the same value!\n\n***YOU DRAW***")
+    print("\n\nYou and the dealer both had the same value!\n\n***YOU DRAW***")
     input("\n\n Press Any Key To Exit...")
-    sys.exit()
+    end()
 
 def lose_bust():
-    print("You got BUST!\n\n***YOU LOSE***")
+    print("\n\nYou got BUST!\n\n***YOU LOSE***")
     input("\n\n Press Any Key To Exit...")
-    sys.exit()
+    end()
 
 def end():
     sys.exit()
