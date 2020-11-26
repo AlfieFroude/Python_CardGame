@@ -122,7 +122,11 @@ def one_shuffled_deck():
     if (card_value == "J" or card_value == "Q" or card_value == "K"):
         card_value = 10
     elif (card_value == "A"):
-        card_value = 11
+        aceValue = input("You have drawn an Ace!\nWould you like it to be valued as 1 (a) or 11 (b):")
+        if (aceValue == "a"):
+            card_value = 1
+        elif (aceValue == "b"):
+            card_value = 11
     elif (card_value_if10 == "0"):
         card_value = 10
     else:
