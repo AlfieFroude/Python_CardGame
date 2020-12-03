@@ -18,6 +18,7 @@ def start():
         end()
     else:
         start()
+#This is the main menu. Loops if null
 
 def play():
     global turn
@@ -28,10 +29,12 @@ def play():
     hand_value = 0
     print("You have been dealt 2 cards:\n")
     deal_hand()
-    print(hand_value)
+    #The player is delt their first 2 cards
+    #print(hand_value)
     print("\nYour current hand is:\n")
     for i in players_hand:
         print(i, end=" ")
+    #Prints players hand out
     gameplay()
 
 def gameplay():
@@ -46,16 +49,17 @@ def gameplay():
             break
     else:
         bust()
+#Gameplay is the event of the player choosing to deal orr fold, it is often repeated therefor is in a seperate def
     
 
 def deal_hand():
     i = 0
     initial_deal_amount = 2
+    #the perameter inputted is the number of cards dealt initially in blackjack
     while(i != initial_deal_amount):
         card_dealt = one_shuffled_deck()
         print(card_dealt)
         players_hand.append(card_dealt)
-        #the peramiter inputted is the number of cards dealt initially in blackjack
         i = i + 1
 
 
@@ -69,6 +73,7 @@ def deal():
     for i in players_hand:
         print(i, end=" ")
     gameplay()
+#The player is delt a single card from the deck
 
 def fold():
     print("\nYou have folded...")
@@ -77,10 +82,12 @@ def fold():
         print(i, end=" ")
     print("\n\nThe total of your hand is: " + str(hand_value))
     the_dealer()
+#If the player chooses fold, this code is run, the dealer then gets their go
 
 def bust():
     if (hand_value > 21):
         lose_bust()
+#If players hand value exceeds 21, they go bust
         
 
 def one_shuffled_deck():
@@ -92,7 +99,6 @@ def one_shuffled_deck():
     deck = []
 
     #card_values = {'A':11,'2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'J':11, 'Q':12, 'K':13}]
-    #Ace set high, changes to low if need be during gameplay
 
     # loops a set amount appending a new interger each time starting from 2
     for i in range(2,11):
@@ -127,6 +133,7 @@ def one_shuffled_deck():
             card_value = 1
         elif (aceValue == "b"):
             card_value = 11
+        #Ace set by player after it has been drawn from the deck
     elif (card_value_if10 == "0"):
         card_value = 10
     else:
@@ -165,10 +172,10 @@ def dealers_gameplay_logic():
 def dealer_deal_hand():
     i = 0
     initial_deal_amount = 2
+    #the perameter inputted is the number of cards dealt initially in blackjack
     while(i != initial_deal_amount):
         card_dealt = one_shuffled_deck()
         dealers_hand.append(card_dealt)
-        #the peramiter inputted is the number of cards dealt initially in blackjack
         i = i + 1
 
 def dealer_deal():
