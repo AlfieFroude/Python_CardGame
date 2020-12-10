@@ -5,7 +5,8 @@ from os import sys
 from tkinter import *
 
 root = Tk()
-
+global deckCreated
+deckCreated = 0
 deck_amount = 53
 global dealer_bust
 dealer_bust = False
@@ -94,32 +95,41 @@ def bust():
         
 
 def one_shuffled_deck():
+    global deckCreated
+    if deckCreated == 0:
+        suits = ['Hearts ♥', 'Spades ♠', 'Diamonds ♦', 'Clubs ♣']
+        royals = ["J", "Q", "K", "A"]
+        numbered_cards = []
+        global deck
+        deck = []
 
-    suits = ['Hearts ♥', 'Spades ♠', 'Diamonds ♦', 'Clubs ♣']
-    royals = ["J", "Q", "K", "A"]
-    numbered_cards = []
-    global deck
-    deck = []
+        #card_values = {'A':11,'2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'J':11, 'Q':12, 'K':13}]
 
-    #card_values = {'A':11,'2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'J':11, 'Q':12, 'K':13}]
+        # loops a set amount appending a new interger each time starting from 2
+        for i in range(2,11):
+            numbered_cards.append(str(i))
+            # numbers 2-10 added to numbered_cards and converted to strings
+        
+        for o in range(4):
+            numbered_cards.append(royals[o])
+            # royal cards added to numbered_cards to complete basic card order
 
-    # loops a set amount appending a new interger each time starting from 2
-    for i in range(2,11):
-        numbered_cards.append(str(i))
-        # numbers 2-10 added to numbered_cards and converted to strings
-    
-    for o in range(4):
-        numbered_cards.append(royals[o])
-        # royal cards added to numbered_cards to complete basic card order
+        for p in range(4):
+            for r in range(13):
+                card = (numbered_cards[r] + " of " + suits[p])
+                deck.append(card)
+            # creates 4 sets of 13 cards with different suits and appends them into deck
 
-    for p in range(4):
-        for r in range(13):
-            card = (numbered_cards[r] + " of " + suits[p])
-            deck.append(card)
-        # creates 4 sets of 13 cards with different suits and appends them into deck
-
-    random.shuffle(deck)
-    # shuffles deck
+        random.shuffle(deck)
+        # shuffles deck
+        deckCreated = deckCreated + 1
+        #print(deck)
+    """
+    The deck is created ^above^, it is a complete deck that is shuffled at the beginning of the game and is reactive to the gameplay.
+    The deck is updated when cards are dealt, however this means the deck can bottom out if all cards are dealt, to fix this is will
+    reset the table, basically resetting the game once all cards are dealt. This deck also could allow me to implement card counting for the dealer.
+    """
+    #print(deck)
     global deck_amount
     card_limit = 0
     deck_amount = card_limit
@@ -212,23 +222,43 @@ def rules():
 
 def win():
     print("\n\nYou beat the dealer!\n\n***YOU WIN***")
-    input("\n\n Press Any Key To Exit...")
-    end()
+    input("\n\n Press Any Key To Continue...")
+    playAgain()
 
 def draw():
     print("\n\nYou and the dealer both had the same value!\n\n***YOU DRAW***")
-    input("\n\n Press Any Key To Exit...")
-    end()
+    input("\n\n Press Any Key To Continue...")
+    playAgain()
 
 def lose_bust():
     print("\n\nYou got BUST!\n\n***YOU LOSE***")
-    input("\n\n Press Any Key To Exit...")
-    end()
+    input("\n\n Press Any Key To Continue...")
+    playAgain()
 
 def lose():
     print("\n\nThe dealer beat you!\n\n***YOU LOSE***")
-    input("\n\n Press Any Key To Exit...")
-    end()
+    input("\n\n Press Any Key To Continue...")
+    playAgain()
+
+def playAgain():
+    playAgain = input("\n\nPlay Again? yes(y) or no(n)")
+    if playAgain == "y":
+        reset()
+    elif playAgain == "n":
+        end()
+
+def reset():
+    global players_hand
+    players_hand = []
+    global hand_value
+    hand_value = 0
+    global dealers_hand
+    dealers_hand = []
+    global dealers_hand_value
+    dealers_hand_value = 0
+    global deckCreated
+    deckCreated = 0
+    play()
 
 def end():
     sys.exit()
