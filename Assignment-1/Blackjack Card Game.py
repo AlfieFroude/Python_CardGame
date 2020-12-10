@@ -32,7 +32,7 @@ def play():
     hand_value = 0
     print("You have been dealt 2 cards:\n")
     deal_hand()
-    #The player is delt their first 2 cards
+    #The player is dealt their first 2 cards
     #print(hand_value)
     print("\nYour current hand is:\n")
     for i in players_hand:
@@ -52,7 +52,7 @@ def gameplay():
             break
     else:
         bust()
-#Gameplay is the event of the player choosing to deal orr fold, it is often repeated therefor is in a seperate def
+#Gameplay is the event of the player choosing to deal orr fold, it is often repeated therefor is in a separate def
     
 
 def deal_hand():
@@ -76,7 +76,7 @@ def deal():
     for i in players_hand:
         print(i, end=" ")
     gameplay()
-#The player is delt a single card from the deck
+#The player is dealt a single card from the deck
 
 def fold():
     print("\nYou have folded...")
