@@ -10,6 +10,10 @@ deckCreated = 0
 deck_amount = 53
 global dealer_bust
 dealer_bust = False
+global dealersTurn
+dealersTurn = False
+global dealers_hand_value
+dealers_hand_value = 0
 
 def start():
     print("\n~~~Welcome to Blackjack!~~~\n")
@@ -85,6 +89,8 @@ def fold():
     for i in players_hand:
         print(i, end=" ")
     print("\n\nThe total of your hand is: " + str(hand_value))
+    global dealersTurn
+    dealersTurn = True
     the_dealer()
 #If the player chooses fold, this code is run, the dealer then gets their go
 
@@ -141,12 +147,20 @@ def one_shuffled_deck():
     if (card_value == "J" or card_value == "Q" or card_value == "K"):
         card_value = 10
     elif (card_value == "A"):
-        aceValue = input("You have drawn an Ace!\nWould you like it to be valued as 1 (a) or 11 (b):")
-        if (aceValue == "a"):
-            card_value = 1
-        elif (aceValue == "b"):
-            card_value = 11
-        #Ace set by player after it has been drawn from the deck
+        global dealersTurn
+        global dealers_hand_value
+        if (dealersTurn == True):
+            if (dealers_hand_value > 10):
+                aceValue = 1
+            else:
+                aceValue = 11
+        else:
+            aceValue = input("You have drawn an Ace!\nWould you like it to be valued as 1 (a) or 11 (b):")
+            if (aceValue == "a"):
+                card_value = 1
+            elif (aceValue == "b"):
+                card_value = 11
+            #Ace set by player after it has been drawn from the deck
     elif (card_value_if10 == "0"):
         card_value = 10
     else:
@@ -155,7 +169,6 @@ def one_shuffled_deck():
         global hand_value
         hand_value = hand_value + card_value
     elif (turn == False):
-        global dealers_hand_value
         dealers_hand_value = dealers_hand_value + card_value
     return card_picked
 
@@ -170,9 +183,21 @@ def the_dealer():
     dealers_gameplay_logic()
 
 def dealers_gameplay_logic():
-    while (dealers_hand_value < 21):
-        if (dealers_hand_value <= 16):
+    while (dealers_hand_value <= 21):
+        if (dealers_hand_value > hand_value):
+            dealer_fold()
+        elif (dealers_hand_value == hand_value):
+            dealer_fold()
+        elif (dealers_hand_value <= 11):
             dealer_deal()
+        elif (17< hand_value < 22) and (dealers_hand_value < hand_value):
+            dealer_deal()
+        elif (11 < dealers_hand_value < 15) and (hand_value >= dealers_hand_value):
+            dealer_deal()
+        elif (11 < dealers_hand_value < 16) and (14 < hand_value < 22):
+            dealer_deal()
+        elif (15 < dealers_hand_value < 22) and (hand_value <= 15):
+            dealer_fold()
         else:
             dealer_fold()
             break
@@ -258,6 +283,8 @@ def reset():
     dealers_hand_value = 0
     global deckCreated
     deckCreated = 0
+    global dealer_bust
+    dealer_bust = False
     play()
 
 def end():
