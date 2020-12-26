@@ -76,7 +76,7 @@ def deal():
     card_dealt = one_shuffled_deck()
     print(card_dealt)
     players_hand.append(card_dealt)
-    print(hand_value)
+    #print(hand_value)
     print("\nYour current hand is:\n")
     for i in players_hand:
         print(i, end=" ")
