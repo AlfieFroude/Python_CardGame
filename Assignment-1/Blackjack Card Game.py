@@ -5,8 +5,9 @@ from os import sys
 from tkinter import *
 
 root = Tk()
-global deckCreated
-deckCreated = 0
+global decksCreated
+decksCreated = 0
+global deck_amount
 deck_amount = 53
 global dealer_bust
 dealer_bust = False
@@ -35,6 +36,8 @@ def play():
     players_hand = []
     global hand_value
     hand_value = 0
+    if decksCreated == 0:
+        newDeck()
     print("You have been dealt 2 cards:\n")
     deal_hand()
     #The player is dealt their first 2 cards
@@ -65,7 +68,7 @@ def deal_hand():
     initial_deal_amount = 2
     #the perameter inputted is the number of cards dealt initially in blackjack
     while(i != initial_deal_amount):
-        card_dealt = one_shuffled_deck()
+        card_dealt = deckEvents()
         print(card_dealt)
         players_hand.append(card_dealt)
         i = i + 1
@@ -73,7 +76,7 @@ def deal_hand():
 
 def deal():
     print("You have been dealt a card:\n")
-    card_dealt = one_shuffled_deck()
+    card_dealt = deckEvents()
     print(card_dealt)
     players_hand.append(card_dealt)
     #print(hand_value)
@@ -99,10 +102,11 @@ def bust():
         lose_bust()
 #If players hand value exceeds 21, they go bust
         
+class deckConstructor:
+    def __init__(self, deckNum):
+        self.deckNum = deckNum
 
-def one_shuffled_deck():
-    global deckCreated
-    if deckCreated == 0:
+    def buildDeck(self):
         suits = ['Hearts ♥', 'Spades ♠', 'Diamonds ♦', 'Clubs ♣']
         royals = ["J", "Q", "K", "A"]
         numbered_cards = []
@@ -128,20 +132,24 @@ def one_shuffled_deck():
 
         random.shuffle(deck)
         # shuffles deck
-        deckCreated = deckCreated + 1
-        #print(deck)
-    """
-    The deck is created ^above^, it is a complete deck that is shuffled at the beginning of the game and is reactive to the gameplay.
-    The deck is updated when cards are dealt, however this means the deck can bottom out if all cards are dealt, to fix this is will
-    reset the table, basically resetting the game once all cards are dealt. This deck also could allow me to implement card counting for the dealer.
-    """
-    #print(deck)
+
+        global decksCreated
+        decksCreated += 1
+        return deck
+def newDeck():
+    d = deckConstructor(decksCreated + 1)
+    global deckInPlay
+    deckInPlay = d.buildDeck()
+
+def deckEvents():
+    
+    global deckInPlay
     global deck_amount
     card_limit = 0
     deck_amount = card_limit
     h = random.randint(0, card_limit)
     deck_amount-=1
-    card_picked = deck.pop(h)
+    card_picked = deckInPlay.pop(h)
     card_value = card_picked[0]
     card_value_if10 = card_picked[1]
     if (card_value == "J" or card_value == "Q" or card_value == "K"):
@@ -151,9 +159,9 @@ def one_shuffled_deck():
         global dealers_hand_value
         if (dealersTurn == True):
             if (dealers_hand_value > 10):
-                aceValue = 1
+                card_value = 1
             else:
-                aceValue = 11
+                card_value = 11
         else:
             aceValue = input("You have drawn an Ace!\nWould you like it to be valued as 1 (a) or 11 (b):")
             if (aceValue == "a"):
@@ -169,7 +177,7 @@ def one_shuffled_deck():
         global hand_value
         hand_value = hand_value + card_value
     elif (turn == False):
-        dealers_hand_value = dealers_hand_value + card_value
+        dealers_hand_value += int(card_value)
     return card_picked
 
         #when function is called a random card to drawn from the deck
@@ -212,12 +220,12 @@ def dealer_deal_hand():
     initial_deal_amount = 2
     #the perameter inputted is the number of cards dealt initially in blackjack
     while(i != initial_deal_amount):
-        card_dealt = one_shuffled_deck()
+        card_dealt = deckEvents()
         dealers_hand.append(card_dealt)
         i = i + 1
 
 def dealer_deal():
-    card_dealt = one_shuffled_deck()
+    card_dealt = deckEvents()
     dealers_hand.append(card_dealt)
     #print(hand_value)
     dealers_gameplay_logic()
@@ -281,10 +289,12 @@ def reset():
     dealers_hand = []
     global dealers_hand_value
     dealers_hand_value = 0
-    global deckCreated
-    deckCreated = 0
     global dealer_bust
     dealer_bust = False
+
+    if len(deckInPlay) <= 10:
+        newDeck()
+        print("new deck created")
     play()
 
 def end():
