@@ -9,6 +9,7 @@ GREEN = (10, 108, 3)
 
 FPS = 60
 
+
 CARD = pygame.image.load(os.path.join('Assets', '2C.png'))
 
 def draw_window():
@@ -22,7 +23,7 @@ def main():
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pyg-ame.QUIT:
                 run = False
 
         draw_window()
