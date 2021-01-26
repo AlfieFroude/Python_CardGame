@@ -3,6 +3,7 @@
 
 import random
 from os import sys
+import os
 
 global decksCreated
 decksCreated = 0
@@ -26,12 +27,16 @@ def start():
     print("\n~~~Welcome to Blackjack!~~~\n")
     begin = input("Start 's'\n\nHow To Play 'r'\n\nQuit 'q'\n\n\nINPUT:")
     if (begin == "r"):
+        os.system('cls' if os.name == 'nt' else 'clear')
         rules()
     elif (begin == "s"):
+        os.system('cls' if os.name == 'nt' else 'clear')
         play()
     elif (begin == "q"):
+        os.system('cls' if os.name == 'nt' else 'clear')
         end()
     else:
+        os.system('cls' if os.name == 'nt' else 'clear')
         start()
 """start is the main menu. Loops if null."""
 
@@ -61,10 +66,12 @@ def gameplay():
     while hand_value <= 21:
         nextmove = input("\n\nWould you like to DRAW (d) or FOLD (f):\n\n\nINPUT:")
         if (nextmove == "d"):
+            os.system('cls' if os.name == 'nt' else 'clear')
             deal()
         elif (nextmove == "f"):
             global turn
             turn = False
+            os.system('cls' if os.name == 'nt' else 'clear')
             fold()
             break
     else:
@@ -95,7 +102,7 @@ def deal():
     print("\nYour current hand is:\n")
     for i in players_hand:
         print(i, end=" ")
-    if (i == 5)and(hand_value <= 21):
+    if (i == 4)and(hand_value <= 21):
         cardTrick()
     else:
         gameplay()
@@ -304,7 +311,8 @@ def rules():
     print("Aim:\n Get your hand's total as close to 21 as possible.\n If you exceed 21 you are bust.\n If you get 21 you have blackjack.\n  - In this case, you can only be beat if the dealer gets blackjack aswell. (This results in a DRAW).\n If you get anything below blackjack you just need to get higher than the dealer to WIN.\n")
     print("How To Play: ")
     print("1) You will be dealt 2 cards\n2) You have 2 options, FOLD or DRAW\n  FOLD: Stop your play\n  DRAW: Draw another card\n3) Get your hand value to 21 or higher than the dealers hand\n4) Don't get BUST! ")
-    input("\nPress Any Key To Continue...")
+    input("\nPress Enter To Continue...")
+    os.system('cls' if os.name == 'nt' else 'clear')
     start()
 """
 rules is a bunch of text that instructs the user how to play.
@@ -359,12 +367,15 @@ If the player wins because of a 5 card trick this code is run and the score is u
 """
 
 def playAgain():
-    replay = input("\n\nPlay Again? yes(y) or no(n)")
+    replay = input("\n\nAnother Round? yes(y) or no(n)")
     if replay == "y":
+        os.system('cls' if os.name == 'nt' else 'clear')
         reset()
     elif replay == "n":
+        os.system('cls' if os.name == 'nt' else 'clear')
         end()
     else:
+        os.system('cls' if os.name == 'nt' else 'clear')
         playAgain()
 """
 playAgain is a statement that determines if the player wishes to play again or not.
