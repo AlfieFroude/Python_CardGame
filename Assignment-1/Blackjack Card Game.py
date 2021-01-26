@@ -102,7 +102,7 @@ def deal():
     print("\nYour current hand is:\n")
     for i in players_hand:
         print(i, end=" ")
-    if (i == 4)and(hand_value <= 21):
+    if (len(players_hand)==5)and(hand_value <= 21):
         cardTrick()
     else:
         gameplay()
@@ -261,8 +261,10 @@ def dealers_gameplay_logic():
         dealer_bust = True
         dealer_fold()
 """
-dealers_gameplay_logic is where the dealer plays the game on their turn, it uses basic logic to determine if it should DRAW or FOLD depending
-on their hand value and the players hand value. (In a real game of blackjack the players play face up and the dealer goes last, so they would
+dealers_gameplay_logic is where the dealer plays the game on their turn,
+it uses basic logic to determine if it should DRAW or FOLD depending
+on their hand value and the players hand value. (In a real game of blackjack 
+the players play face up and the dealer goes last, so they would
 be able to see the players hand.)
 """
 
@@ -329,7 +331,9 @@ If the player wins this code is run and the score is updated.
 """
 
 def draw():
-    print("\nYou and the dealer both had the same value!\n\n***YOU DRAW***")
+    print("\nYou and the dealer both had the same value!\n\n***YOU LOSE***")
+    global dealerScore
+    dealerScore += 1
     print("The Score:\n YOU: "+ str(playerScore) + " V DEALER: " + str(dealerScore))
     playAgain()
 """
